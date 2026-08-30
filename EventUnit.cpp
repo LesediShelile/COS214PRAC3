@@ -1,3 +1,2 @@
 #include "EventUnit.h"
-
-EventUnit::EventUnit(const std::string& name) : EventComponent(name) {}
+EventUnit::EventUnit(const std::string& name, int capacity) : EventComponent(name, capacity) {}

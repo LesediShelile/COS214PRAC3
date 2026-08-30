@@ -6,18 +6,23 @@
 class Observer;
 class EventNotice;
 
-// Subject role: keeps a list of Observers and pushes notices out to them.
-// EventControl uses this to broadcast into the convention, and EventGroup
-// reuses it to relay a notice it received on down to its own children.
+/**
+ * @brief Subject role of the Observer pattern.
+ *
+ * Observer pointers are non-owning. The subject only manages registration.
+ */
 class Subject {
-    protected:
-        std::vector<Observer*> observers;
-
-    public:
-        virtual void attach(Observer* observer);
-        virtual void detach(Observer* observer);
-        virtual void notify(const EventNotice& notice);
-        virtual ~Subject() {}
+protected:
+    std::vector<Observer*> observers;
+public:
+    /** @brief Registers an observer once. @param observer Non-owning observer pointer. */
+    virtual void attach(Observer* observer);
+    /** @brief Removes an observer if registered; otherwise does nothing. @param observer Observer pointer. */
+    virtual void detach(Observer* observer);
+    /** @brief Pushes a notice to all currently registered observers. @param notice Notice to deliver. */
+    virtual void notify(const EventNotice& notice);
+    /** @brief Virtual destructor for polymorphic use. */
+    virtual ~Subject() {}
 };
 
 #endif

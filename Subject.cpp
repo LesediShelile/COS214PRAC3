@@ -1,11 +1,11 @@
 #include "Subject.h"
 #include "Observer.h"
+#include "EventNotice.h"
 #include <algorithm>
 
 void Subject::attach(Observer* observer) {
-    if (observer != nullptr) {
+    if (observer != 0 && std::find(observers.begin(), observers.end(), observer) == observers.end())
         observers.push_back(observer);
-    }
 }
 
 void Subject::detach(Observer* observer) {
@@ -13,7 +13,7 @@ void Subject::detach(Observer* observer) {
 }
 
 void Subject::notify(const EventNotice& notice) {
-    for (Observer* observer : observers) {
-        observer->update(notice);
-    }
+    std::vector<Observer*> current = observers;
+    for (std::vector<Observer*>::iterator it = current.begin(); it != current.end(); ++it)
+        (*it)->update(notice);
 }

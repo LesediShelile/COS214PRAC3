@@ -3,45 +3,53 @@
 #include <algorithm>
 #include <iostream>
 
-EventGroup::EventGroup(const std::string& name) : EventComponent(name) {}
+EventGroup::EventGroup(const std::string& name) : EventComponent(name, 0) {}
 
 EventGroup::~EventGroup() {
-    for (EventComponent* child : children) {
-        delete child;
-    }
+    observers.clear();
+    for (std::vector<EventComponent*>::iterator it = children.begin(); it != children.end(); ++it)
+        delete *it;
+    children.clear();
 }
 
 void EventGroup::add(EventComponent* component) {
-    if (component == nullptr) return;
-
+    if (component == 0 || std::find(children.begin(), children.end(), component) != children.end()) return;
     children.push_back(component);
-
-    // Every child in this tree is also an Observer (EventUnit or EventGroup),
-    // so registering it here is what lets notify() reach it later.
-    Observer* observer = dynamic_cast<Observer*>(component);
-    if (observer != nullptr) {
-        attach(observer);
-    }
+    attach(component);
 }
 
 void EventGroup::remove(EventComponent* component) {
-    children.erase(std::remove(children.begin(), children.end(), component), children.end());
-
-    Observer* observer = dynamic_cast<Observer*>(component);
-    if (observer != nullptr) {
-        detach(observer);
-    }
+    std::vector<EventComponent*>::iterator it = std::find(children.begin(), children.end(), component);
+    if (it == children.end()) return;
+    detach(component);
+    children.erase(it);
 }
 
-void EventGroup::display(int depth) const {
-    std::cout << std::string(depth * 2, ' ') << "- " << name << std::endl;
-    for (const EventComponent* child : children) {
-        child->display(depth + 1);
-    }
+void EventGroup::open() {
+    openState = true;
+    for (std::vector<EventComponent*>::iterator it = children.begin(); it != children.end(); ++it) (*it)->open();
+}
+
+void EventGroup::close() {
+    openState = false;
+    for (std::vector<EventComponent*>::iterator it = children.begin(); it != children.end(); ++it) (*it)->close();
+}
+
+void EventGroup::reportStatus() const {
+    std::cout << name << ": " << (openState ? "OPEN" : "CLOSED")
+              << ", aggregate capacity=" << getCapacity() << std::endl;
+    for (std::vector<EventComponent*>::const_iterator it = children.begin(); it != children.end(); ++it)
+        (*it)->reportStatus();
+}
+
+int EventGroup::getCapacity() const {
+    int total = 0;
+    for (std::vector<EventComponent*>::const_iterator it = children.begin(); it != children.end(); ++it)
+        total += (*it)->getCapacity();
+    return total;
 }
 
 void EventGroup::update(const EventNotice& notice) {
-    std::cout << "[" << name << "] received " << notice.getTypeName()
-              << " -> relaying to " << children.size() << " member(s)." << std::endl;
+    std::cout << "[" << name << "] relays " << notice.getTypeName() << std::endl;
     notify(notice);
 }
