@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-VIPSupport::VIPSupport() : EventUnit("VIP Support") {}
+VIPSupport::VIPSupport() : EventUnit("VIP Support", 25) {}
 
 void VIPSupport::update(const EventNotice& notice) {
     switch (notice.getType()) {

@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-VIPCheckIn::VIPCheckIn() : EventUnit("VIP Check-In") {}
+VIPCheckIn::VIPCheckIn() : EventUnit("VIP Check-In", 100) {}
 
 void VIPCheckIn::update(const EventNotice& notice) {
     switch (notice.getType()) {

@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-FirstAidStation::FirstAidStation() : EventUnit("First Aid Station") {}
+FirstAidStation::FirstAidStation() : EventUnit("First Aid Station", 8) {}
 
 void FirstAidStation::update(const EventNotice& notice) {
     switch (notice.getType()) {

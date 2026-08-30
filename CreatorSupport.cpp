@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-CreatorSupport::CreatorSupport() : EventUnit("Creator Support") {}
+CreatorSupport::CreatorSupport() : EventUnit("Creator Support", 30) {}
 
 void CreatorSupport::update(const EventNotice& notice) {
     switch (notice.getType()) {

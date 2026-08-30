@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-EntranceGate::EntranceGate() : EventUnit("Entrance Gate") {}
+EntranceGate::EntranceGate() : EventUnit("Entrance Gate", 1000) {}
 
 void EntranceGate::update(const EventNotice& notice) {
     switch (notice.getType()) {

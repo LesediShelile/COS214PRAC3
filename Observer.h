@@ -3,17 +3,12 @@
 
 class EventNotice;
 
-/**
- * @brief Observer role of the Observer pattern.
- *
- * Objects that need event notices implement update().
- */
+// Observer role: anything that can be told about a change in the convention.
+// Both EventUnit (leaf) and EventGroup (composite) implement this.
 class Observer {
-public:
-    /** @brief Receives a pushed event notice. @param notice Notice being delivered. */
-    virtual void update(const EventNotice& notice) = 0;
-    /** @brief Virtual destructor for polymorphic destruction. */
-    virtual ~Observer() {}
+    public:
+        virtual void update(const EventNotice& notice) = 0;
+        virtual ~Observer() {}
 };
 
 #endif

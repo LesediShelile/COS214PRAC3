@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-GamingStation::GamingStation() : EventUnit("Gaming Station") {}
+GamingStation::GamingStation() : EventUnit("Gaming Station", 40) {}
 
 void GamingStation::update(const EventNotice& notice) {
     switch (notice.getType()) {

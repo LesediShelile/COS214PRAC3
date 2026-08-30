@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-TechnicalSupport::TechnicalSupport() : EventUnit("Technical Support") {}
+TechnicalSupport::TechnicalSupport() : EventUnit("Technical Support", 20) {}
 
 void TechnicalSupport::update(const EventNotice& notice) {
     switch (notice.getType()) {

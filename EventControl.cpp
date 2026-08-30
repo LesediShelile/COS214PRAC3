@@ -1,17 +1,18 @@
 #include "EventControl.h"
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
 
 EventControl::EventControl() : currentNotice() {}
 
 void EventControl::issueNotice(NoticeType type, const std::string& message) {
     currentNotice.reset(new EventNotice(type, message));
-    std::cout << "\n=== " << currentNotice->getTypeName() << " ===\n"
-              << currentNotice->getMessage() << std::endl;
+    std::cout << "\n=== EventControl issues " << currentNotice->getTypeName() << " ===" << std::endl;
     notify(*currentNotice);
 }
 
 const EventNotice& EventControl::getCurrentNotice() const {
-    if (!currentNotice.get()) throw std::logic_error("No notice has been issued.");
+    if (!currentNotice) {
+        throw std::logic_error("EventControl has not issued a notice yet.");
+    }
     return *currentNotice;
 }

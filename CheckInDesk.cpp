@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-CheckInDesk::CheckInDesk() : EventUnit("Check-In Desk") {}
+CheckInDesk::CheckInDesk() : EventUnit("Check-In Desk", 200) {}
 
 void CheckInDesk::update(const EventNotice& notice) {
     switch (notice.getType()) {

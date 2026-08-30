@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-RefereeTeam::RefereeTeam() : EventUnit("Referee Team") {}
+RefereeTeam::RefereeTeam() : EventUnit("Referee Team", 12) {}
 
 void RefereeTeam::update(const EventNotice& notice) {
     switch (notice.getType()) {

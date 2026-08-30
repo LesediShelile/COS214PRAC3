@@ -1,79 +1,67 @@
+#include "Convention.h"
 #include "EventControl.h"
-#include "EventGroup.h"
-#include "EsportsStage.h"
-#include "SpectatorGate.h"
-#include "GameDemoBooth.h"
-#include "VRStation.h"
-#include "MedicalTeam.h"
-#include "InformationDesk.h"
-#include "SecurityTeam.h"
-#include "BadgeStation.h"
+#include "EventNotice.h"
 #include <iostream>
 
 int main() {
-    // Client builds the Composite and establishes Observer registration through add().
-    EventGroup* gameVerse = new EventGroup("GameVerse Convention");
-    EventGroup* operations = new EventGroup("Main Operations");
-    EventGroup* registration = new EventGroup("Registration Centre");
-    EventGroup* security = new EventGroup("Security Operations");
-    EventGroup* esports = new EventGroup("Esports Hall");
-    EventGroup* tournament = new EventGroup("Championship Arena");
-    EventGroup* experience = new EventGroup("Experience Hall");
-    EventGroup* demos = new EventGroup("Demo Zone");
-    EventGroup* vip = new EventGroup("VIP Services");
-
-    BadgeStation* badge = new BadgeStation();
-    SecurityTeam* securityTeam = new SecurityTeam();
-    EsportsStage* stage = new EsportsStage();
-    SpectatorGate* gate = new SpectatorGate();
-    VRStation* vr = new VRStation();
-    GameDemoBooth* demo = new GameDemoBooth();
-    MedicalTeam* medical = new MedicalTeam();
-    InformationDesk* info = new InformationDesk();
-
-    gameVerse->add(operations);
-    gameVerse->add(esports);
-    gameVerse->add(experience);
-    gameVerse->add(vip);
-
-    operations->add(registration);
-    operations->add(security);
-    registration->add(badge);
-    security->add(securityTeam);
-    operations->add(medical);
-    esports->add(tournament);
-    tournament->add(stage);
-    tournament->add(gate);
-    experience->add(demos);
-    demos->add(vr);
-    demos->add(demo);
-    vip->add(info);
-
-    std::cout << "\n=== Composite structure / aggregate capacity ===\n";
-    gameVerse->reportStatus();
-
+    Convention gameVerse;
     EventControl control;
-    control.attach(gameVerse);
 
-    std::cout << "\n=== Observer cascade ===\n";
-    control.issueNotice(NoticeType::WEATHER_ALERT, "Severe weather near the outdoor convention entrance.");
-    if (gameVerse->getCapacity() >= 700) {
-        control.issueNotice(NoticeType::CAPACITY_ALERT, "The convention is approaching its safe attendee limit.");
+    std::cout << "=== GameVerse Convention ===\n";
+    gameVerse.display();
+
+    std::cout << "\n=== Composite query ===\n";
+    std::cout << "Total represented capacity: " << gameVerse.getCapacity() << std::endl;
+    gameVerse.open();
+    gameVerse.reportStatus();
+
+    // Observer registration: EventControl knows only the root Composite.
+    control.attach(&gameVerse);
+
+    std::cout << "\n=== Observer notifications ===\n";
+    control.issueNotice(NoticeType::SAFETY_ALERT,
+                        "Unattended item reported near the Esports Hall.");
+    control.issueNotice(NoticeType::CAPACITY_ALERT,
+                        "Registration Centre queue exceeding limit.");
+    control.issueNotice(NoticeType::SERVER_OUTAGE,
+                        "Esports Hall network switch failure.");
+
+    // Condition-based decision suitable for SD3's alt fragment.
+    std::cout << "\n=== Capacity decision ===\n";
+    if (gameVerse.getCapacity() >= 2000) {
+        control.issueNotice(NoticeType::CAPACITY_ALERT,
+                            "Aggregate capacity threshold reached.");
     } else {
-        control.issueNotice(NoticeType::OPEN_AREA, "Capacity is currently safe; registration remains open.");
+        control.issueNotice(NoticeType::OPEN_AREA,
+                            "Capacity is below the warning threshold.");
     }
-    control.issueNotice(NoticeType::EVACUATE, "Fire alarm: begin controlled evacuation.");
 
-    std::cout << "\n=== Runtime reorganisation ===\n";
-    std::cout << "Moving Game Demo Booth from Demo Zone to VIP Services.\n";
-    demos->remove(demo);   // detaches observer and releases ownership
-    vip->add(demo);        // new owner; automatically re-attaches observer
-    control.issueNotice(NoticeType::SCHEDULE_CHANGE, "VIP demo programme updated after the move.");
+    // Runtime reorganisation: transfer a leaf from Demo Zone to VIP Services.
+    // remove/take detaches the observer and add re-attaches it to its new Subject.
+    EventGroup* demoZone = gameVerse.findGroup("Demo Zone");
+    EventGroup* vipArea = gameVerse.findGroup("VIP Services");
+    if (demoZone != 0 && vipArea != 0) {
+        EventComponent* booth = demoZone->takeChild("Game Demo Booth");
+        if (booth != 0) {
+            vipArea->add(booth);
+            std::cout << "\n=== Runtime reorganisation ===\n";
+            std::cout << "Game Demo Booth transferred from Demo Zone to VIP Services.\n";
+        }
+    }
 
-    std::cout << "\n=== Registration change ===\n";
-    control.detach(gameVerse);
-    std::cout << "GameVerse detached from EventControl; no further control notices are delivered.\n";
+    control.issueNotice(NoticeType::SCHEDULE_CHANGE,
+                        "Creator demonstrations moved by 30 minutes.");
 
-    delete gameVerse;      // destroys the complete owned subtree exactly once
+    // Registration change: the root is detached, so it receives no further notices.
+    control.detach(&gameVerse);
+    std::cout << "\n=== Observer detached ===\n";
+    control.issueNotice(NoticeType::TEMPORARY_PAUSE,
+                        "Convention temporarily paused.");
+
+    gameVerse.close();
+    gameVerse.reportStatus();
+
+    // gameVerse owns its complete Composite subtree. Its destructor releases
+    // every remaining child exactly once when main exits.
     return 0;
 }

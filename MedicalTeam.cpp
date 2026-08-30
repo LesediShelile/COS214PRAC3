@@ -2,15 +2,21 @@
 #include "EventNotice.h"
 #include <iostream>
 
-MedicalTeam::MedicalTeam() : EventUnit("Medical Team", 10) {}
+MedicalTeam::MedicalTeam() : EventUnit("Medical Team", 12) {}
 
 void MedicalTeam::update(const EventNotice& notice) {
     switch (notice.getType()) {
-        case NoticeType::WEATHER_ALERT:
-        case NoticeType::EVACUATE:
-            open(); std::cout << "  Medical Team: remains active and prepares to assist attendees." << std::endl; break;
+        case NoticeType::SAFETY_ALERT:
+            std::cout << "  Medical Team: remains operational and prepares to assist attendees." << std::endl;
+            break;
         case NoticeType::CAPACITY_ALERT:
-            std::cout << "  Medical Team: remains operational; medical capacity is managed separately." << std::endl; break;
-        default: std::cout << "  Medical Team: acknowledges " << notice.getTypeName() << "." << std::endl; break;
+            std::cout << "  Medical Team: remains operational because medical capacity is not affected by attendee admission." << std::endl;
+            break;
+        case NoticeType::EVACUATE:
+            std::cout << "  Medical Team: remains active and prepares for potential injuries." << std::endl;
+            break;
+        default:
+            std::cout << "  Medical Team: acknowledges " << notice.getTypeName() << "." << std::endl;
+            break;
     }
 }

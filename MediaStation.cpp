@@ -2,7 +2,7 @@
 #include "EventNotice.h"
 #include <iostream>
 
-MediaStation::MediaStation() : EventUnit("Media Station") {}
+MediaStation::MediaStation() : EventUnit("Media Station", 20) {}
 
 void MediaStation::update(const EventNotice& notice) {
     switch (notice.getType()) {

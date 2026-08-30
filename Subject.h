@@ -7,22 +7,23 @@ class Observer;
 class EventNotice;
 
 /**
- * @brief Subject role of the Observer pattern.
+ * @brief Observer Subject abstraction.
  *
- * Observer pointers are non-owning. The subject only manages registration.
+ * Observer pointers are non-owning. Attaching the same observer twice is
+ * ignored, and detaching an unregistered observer has no effect.
  */
 class Subject {
-protected:
-    std::vector<Observer*> observers;
-public:
-    /** @brief Registers an observer once. @param observer Non-owning observer pointer. */
-    virtual void attach(Observer* observer);
-    /** @brief Removes an observer if registered; otherwise does nothing. @param observer Observer pointer. */
-    virtual void detach(Observer* observer);
-    /** @brief Pushes a notice to all currently registered observers. @param notice Notice to deliver. */
-    virtual void notify(const EventNotice& notice);
-    /** @brief Virtual destructor for polymorphic use. */
-    virtual ~Subject() {}
+    protected:
+        std::vector<Observer*> observers;
+
+    public:
+        virtual ~Subject() {}
+        /** @param observer Non-owning observer reference to register. */
+        virtual void attach(Observer* observer);
+        /** @param observer Observer reference to unregister. */
+        virtual void detach(Observer* observer);
+        /** @param notice Notice to push to a snapshot of current observers. */
+        virtual void notify(const EventNotice& notice);
 };
 
 #endif
