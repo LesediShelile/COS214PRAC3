@@ -7,6 +7,7 @@ class CreatorSupport : public EventUnit {
     public:
         CreatorSupport();
         void update(const EventNotice& notice) override;
+
 };
 
 #endif

@@ -7,6 +7,8 @@ class GameDemoBooth : public EventUnit {
     public:
         GameDemoBooth();
         void update(const EventNotice& notice) override;
+        void onScheduleChange() override;
+
 };
 
 #endif

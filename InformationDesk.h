@@ -7,6 +7,9 @@ class InformationDesk : public EventUnit {
     public:
         InformationDesk();
         void update(const EventNotice& notice) override;
+        void onServerOutage() override;
+        void onScheduleChange() override;
+
 };
 
 #endif

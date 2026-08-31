@@ -7,6 +7,8 @@ class TechnicalSupport : public EventUnit {
     public:
         TechnicalSupport();
         void update(const EventNotice& notice) override;
+        void onServerOutage() override;
+
 };
 
 #endif

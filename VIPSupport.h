@@ -7,6 +7,8 @@ class VIPSupport : public EventUnit {
     public:
         VIPSupport();
         void update(const EventNotice& notice) override;
+        void onEvacuate() override;
+
 };
 
 #endif

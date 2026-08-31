@@ -7,6 +7,8 @@ class MediaStation : public EventUnit {
     public:
         MediaStation();
         void update(const EventNotice& notice) override;
+        void onServerOutage() override;
+
 };
 
 #endif

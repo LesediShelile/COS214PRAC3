@@ -1,12 +1,13 @@
-#ifndef GAMINGSTATION_H
-#define GAMINGSTATION_H
+#include "GamingStation.h"
+#include "EventNotice.h"
+#include <iostream>
 
-#include "EventUnit.h"
+GamingStation::GamingStation() : EventUnit("Gaming Station", 40) {}
 
-class GamingStation : public EventUnit {
-    public:
-        GamingStation();
-        void update(const EventNotice& notice) override;
-};
+void GamingStation::update(const EventNotice& notice) {
+    notice.dispatch(*this);
+}
 
-#endif
+void GamingStation::onSafetyAlert() {
+    std::cout << "  Gaming Station: stops accepting players and saves the current session." << std::endl;
+}

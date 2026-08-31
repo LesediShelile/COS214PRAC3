@@ -31,3 +31,14 @@ void EventUnit::reportStatus() const {
 int EventUnit::getCapacity() const {
     return capacity;
 }
+
+void EventUnit::onSafetyAlert() {}
+void EventUnit::onCapacityAlert() {}
+void EventUnit::onServerOutage() {}
+void EventUnit::onEvacuate() {}
+void EventUnit::onScheduleChange() {}
+void EventUnit::onOpenArea() {}
+void EventUnit::onCloseArea() {}
+void EventUnit::onWeatherAlert() {}
+void EventUnit::onTemporaryPause() {}
+void EventUnit::onResume() {}

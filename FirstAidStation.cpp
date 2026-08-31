@@ -5,13 +5,13 @@
 FirstAidStation::FirstAidStation() : EventUnit("First Aid Station", 8) {}
 
 void FirstAidStation::update(const EventNotice& notice) {
-    switch (notice.getType()) {
-        case NoticeType::EVACUATE:
-        case NoticeType::SAFETY_ALERT:
-            std::cout << "  First Aid Station: remains operational and prepares to assist attendees." << std::endl;
-            break;
-        default:
-            std::cout << "  First Aid Station: acknowledges " << notice.getType() << "." << std::endl;
-            break;
-    }
+    notice.dispatch(*this);
+}
+
+void FirstAidStation::onSafetyAlert() {
+    std::cout << "  First Aid Station: remains operational and prepares to assist attendees." << std::endl;
+}
+
+void FirstAidStation::onEvacuate() {
+    std::cout << "  First Aid Station: remains operational and prepares to assist attendees." << std::endl;
 }

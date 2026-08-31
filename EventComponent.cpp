@@ -1,31 +1,60 @@
-#include "EventComponent.h"
-#include <iostream>
+#ifndef EVENTCOMPONENT_H
+#define EVENTCOMPONENT_H
 
-EventComponent::EventComponent(const std::string& name)
-    : name(name), openState(false) {}
+#include <string>
+#include "Observer.h"
 
-void EventComponent::open() {
-    openState = true;
-}
+/**
+ * @brief Common Component interface for the GameVerse Composite tree.
+ *
+ * Event components are also observers so an EventGroup can receive a pushed
+ * notice from its parent and pass that notice down its own Subject links.
+ */
+class EventComponent : public Observer {
+protected:
+    std::string name;
+    bool openState;
 
-void EventComponent::close() {
-    openState = false;
-}
+public:
+    explicit EventComponent(const std::string& name);
+    virtual ~EventComponent() {}
 
-void EventComponent::reportStatus() const {
-    std::cout << name << " is " << (openState ? "OPEN" : "CLOSED")
-              << ". Capacity: " << getCapacity() << std::endl;
-}
+    virtual void open();
+    virtual void close();
+    virtual void reportStatus() const;
+    virtual int getCapacity() const;
+    virtual void display(int depth = 0) const;
+    std::string getName() const;
+};
 
-int EventComponent::getCapacity() const {
-    return 0;
-}
+#endif
+#ifndef EVENTCOMPONENT_H
+#define EVENTCOMPONENT_H
 
+#include <string>
+#include "Observer.h"
 
-void EventComponent::display(int depth) const{
-    std::cout << std::string(depth * 2, ' ') << "- " << name << std::endl;
-}
+/**
+ * @brief Common Component interface for the GameVerse Composite tree.
+ *
+ * Event components are also observers so an EventGroup can receive a pushed
+ * notice from its parent and pass that notice down its own Subject links.
+ */
+class EventComponent : public Observer {
+protected:
+    std::string name;
+    bool openState;
 
-std::string EventComponent::getName() const {
-    return name;
-}
+public:
+    explicit EventComponent(const std::string& name);
+    virtual ~EventComponent() {}
+
+    virtual void open();
+    virtual void close();
+    virtual void reportStatus() const;
+    virtual int getCapacity() const;
+    virtual void display(int depth = 0) const;
+    std::string getName() const;
+};
+
+#endif

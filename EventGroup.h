@@ -13,7 +13,7 @@
  * parent and a Subject for interested descendants, allowing notifications to
  * cascade through the Composite tree.
  */
-class EventGroup : public EventComponent, public Observer, public Subject {
+class EventGroup : public EventComponent, public Subject {
     protected:
         std::vector<EventComponent*> children;
 
@@ -35,6 +35,12 @@ class EventGroup : public EventComponent, public Observer, public Subject {
          * @param component Child to remove; ownership transfers to the caller.
          */
         void remove(EventComponent* component);
+
+        /** @brief Removes and returns a child without deleting it. @param childName Name of the child. @return Detached child, or null if not found. */
+        EventComponent* takeChild(const std::string& childName);
+
+        /** @brief Finds a nested group by name. @param groupName Group name. @return Matching group, or null. */
+        EventGroup* findGroup(const std::string& groupName);
 
     
         /** @brief Displays this group and its complete subtree. */

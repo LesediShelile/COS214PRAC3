@@ -2,10 +2,16 @@
 #include "EventNotice.h"
 #include <iostream>
 
-InformationDesk::InformationDesk()
-    : EventUnit("Information Desk", 80) {}
+InformationDesk::InformationDesk() : EventUnit("Information Desk", 80) {}
 
 void InformationDesk::update(const EventNotice& notice) {
-    std::cout << "  Information Desk: keeps attendees informed about event changes."
-              << std::endl;
+    notice.dispatch(*this);
+}
+
+void InformationDesk::onServerOutage() {
+    std::cout << "  Information Desk: informs attendees that the tournament has been delayed." << std::endl;
+}
+
+void InformationDesk::onScheduleChange() {
+    std::cout << "  Information Desk: updates the information available to attendees." << std::endl;
 }

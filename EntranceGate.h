@@ -7,6 +7,8 @@ class EntranceGate : public EventUnit {
     public:
         EntranceGate();
         void update(const EventNotice& notice) override;
+        void onEvacuate() override;
+
 };
 
 #endif

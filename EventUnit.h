@@ -2,36 +2,39 @@
 #define EVENTUNIT_H
 
 #include "EventComponent.h"
-#include "Observer.h"
 
 /**
  * @brief Leaf role of the Composite and Observer patterns.
  *
- * EventUnit represents an individual operational unit and reacts to notices
- * through its polymorphic update() implementation.
+ * Each concrete EventUnit implements update() and may override event-action
+ * hooks to provide responsibility-specific behaviour without type checks.
  */
-class EventUnit : public EventComponent, public Observer {
-    protected:
-        int capacity;
+class EventUnit : public EventComponent {
+protected:
+    int capacity;
 
-    public:
-        /**
-         * @brief Constructs an operational unit.
-         * @param name Unit name.
-         * @param capacity Maximum number represented by the unit.
-         */
-        EventUnit(const std::string& name, int capacity);
-        virtual ~EventUnit() {}
+public:
+    EventUnit(const std::string& name, int capacity);
+    virtual ~EventUnit() {}
 
-        void open() override;
-        void close() override;
-        void reportStatus() const override;
-        int getCapacity() const override;
+    void open() override;
+    void close() override;
+    void reportStatus() const override;
+    int getCapacity() const override;
+    void display(int depth = 0) const override;
 
-        void display(int depth = 0) const override;
+    void update(const EventNotice& notice) override = 0;
 
-        /** @brief Reacts to a notice using the concrete unit's policy. */
-        void update(const EventNotice& notice) override = 0;
+    virtual void onSafetyAlert();
+    virtual void onCapacityAlert();
+    virtual void onServerOutage();
+    virtual void onEvacuate();
+    virtual void onScheduleChange();
+    virtual void onOpenArea();
+    virtual void onCloseArea();
+    virtual void onWeatherAlert();
+    virtual void onTemporaryPause();
+    virtual void onResume();
 };
 
 #endif

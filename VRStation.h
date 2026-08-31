@@ -7,6 +7,9 @@ class VRStation : public EventUnit {
     public:
         VRStation();
         void update(const EventNotice& notice) override;
+        void onCapacityAlert() override;
+        void onEvacuate() override;
+
 };
 
 #endif

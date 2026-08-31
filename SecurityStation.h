@@ -7,6 +7,8 @@ class SecurityStation : public EventUnit {
     public:
         SecurityStation();
         void update(const EventNotice& notice) override;
+        void onCapacityAlert() override;
+
 };
 
 #endif
