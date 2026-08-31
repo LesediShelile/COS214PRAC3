@@ -28,6 +28,8 @@ class EventUnit : public EventComponent, public Observer {
         void reportStatus() const override;
         int getCapacity() const override;
 
+        void display(int depth = 0) const override;
+
         /** @brief Reacts to a notice using the concrete unit's policy. */
         void update(const EventNotice& notice) override = 0;
 };
