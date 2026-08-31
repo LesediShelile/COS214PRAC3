@@ -27,11 +27,6 @@ class EventComponent {
         virtual void reportStatus() const;
         /** @return Capacity represented by this component. */
         virtual int getCapacity() const;
-
-        /** @brief Adds a child when supported by a Composite. */
-        virtual void add(EventComponent* component);
-        /** @brief Removes a child when supported by a Composite. */
-        virtual void remove(EventComponent* component);
         /** @brief Displays this component and, for composites, its subtree. */
         virtual void display(int depth = 0) const;
         /** @return Component name. */

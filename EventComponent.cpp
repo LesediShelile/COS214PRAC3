@@ -21,8 +21,6 @@ int EventComponent::getCapacity() const {
     return 0;
 }
 
-void EventComponent::add(EventComponent* /*component*/) {}
-void EventComponent::remove(EventComponent* /*component*/) {}
 
 void EventComponent::display(int depth) const {
     std::cout << std::string(depth * 2, ' ') << "- " << name << std::endl;
