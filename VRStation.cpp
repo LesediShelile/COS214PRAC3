@@ -13,7 +13,7 @@ void VRStation::update(const EventNotice& notice) {
             std::cout << "  VR Station: safely shuts down the VR equipment." << std::endl;
             break;
         default:
-            std::cout << "  VR Station: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  VR Station: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

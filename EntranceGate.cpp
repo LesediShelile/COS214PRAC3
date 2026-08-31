@@ -10,7 +10,7 @@ void EntranceGate::update(const EventNotice& notice) {
             std::cout << "  Entrance Gate: switches to emergency-exit mode and permits people to leave." << std::endl;
             break;
         default:
-            std::cout << "  Entrance Gate: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Entrance Gate: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

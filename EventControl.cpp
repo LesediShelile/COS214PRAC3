@@ -6,7 +6,7 @@ EventControl::EventControl() : currentNotice() {}
 
 void EventControl::issueNotice(NoticeType type, const std::string& message) {
     currentNotice.reset(new EventNotice(type, message));
-    std::cout << "\n=== EventControl issues " << currentNotice->getTypeName() << " ===" << std::endl;
+    std::cout << "\n=== EventControl issues " << currentNotice->getType() << " ===" << std::endl;
     notify(*currentNotice);
 }
 

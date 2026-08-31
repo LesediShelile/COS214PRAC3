@@ -13,7 +13,7 @@ void SpectatorGate::update(const EventNotice& notice) {
             std::cout << "  Spectator Gate: remains open unless the resulting crowd reaches the capacity threshold." << std::endl;
             break;
         default:
-            std::cout << "  Spectator Gate: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Spectator Gate: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

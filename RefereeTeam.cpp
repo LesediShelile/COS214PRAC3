@@ -13,7 +13,7 @@ void RefereeTeam::update(const EventNotice& notice) {
             std::cout << "  Referee Team: updates its match schedule." << std::endl;
             break;
         default:
-            std::cout << "  Referee Team: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Referee Team: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

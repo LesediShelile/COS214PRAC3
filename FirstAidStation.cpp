@@ -11,7 +11,7 @@ void FirstAidStation::update(const EventNotice& notice) {
             std::cout << "  First Aid Station: remains operational and prepares to assist attendees." << std::endl;
             break;
         default:
-            std::cout << "  First Aid Station: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  First Aid Station: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

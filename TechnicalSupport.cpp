@@ -10,7 +10,7 @@ void TechnicalSupport::update(const EventNotice& notice) {
             std::cout << "  Technical Support: investigates and attempts to restore the server." << std::endl;
             break;
         default:
-            std::cout << "  Technical Support: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Technical Support: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

@@ -10,7 +10,7 @@ void SecurityStation::update(const EventNotice& notice) {
             std::cout << "  Security Station: sends security personnel to manage the queue." << std::endl;
             break;
         default:
-            std::cout << "  Security Station: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Security Station: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

@@ -81,7 +81,7 @@ int EventGroup::getCapacity() const {
 }
 
 void EventGroup::update(const EventNotice& notice) {
-    std::cout << "[" << name << "] received " << notice.getTypeName()
+    std::cout << "[" << name << "] received " << notice.getType()
               << " -> relaying to " << children.size() << " member(s)." << std::endl;
     notify(notice);
 }

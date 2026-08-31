@@ -13,7 +13,7 @@ void SecurityTeam::update(const EventNotice& notice) {
             std::cout << "  Security Team: directs attendees toward designated exits." << std::endl;
             break;
         default:
-            std::cout << "  Security Team: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Security Team: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

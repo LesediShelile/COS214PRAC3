@@ -11,7 +11,7 @@ void SafetyTeam::update(const EventNotice& notice) {
             std::cout << "  Safety Team: monitors the VR Zone and assists attendees to safety." << std::endl;
             break;
         default:
-            std::cout << "  Safety Team: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Safety Team: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

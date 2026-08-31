@@ -10,7 +10,7 @@ void VIPSupport::update(const EventNotice& notice) {
             std::cout << "  VIP Support: escorts VIP guests to the designated evacuation route." << std::endl;
             break;
         default:
-            std::cout << "  VIP Support: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  VIP Support: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

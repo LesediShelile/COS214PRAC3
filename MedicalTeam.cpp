@@ -16,7 +16,7 @@ void MedicalTeam::update(const EventNotice& notice) {
             std::cout << "  Medical Team: remains active and prepares for potential injuries." << std::endl;
             break;
         default:
-            std::cout << "  Medical Team: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  Medical Team: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }

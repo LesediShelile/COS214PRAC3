@@ -16,7 +16,7 @@ void VIPCheckIn::update(const EventNotice& notice) {
             std::cout << "  VIP Check-In: updates VIP guests about affected activities." << std::endl;
             break;
         default:
-            std::cout << "  VIP Check-In: acknowledges " << notice.getTypeName() << "." << std::endl;
+            std::cout << "  VIP Check-In: acknowledges " << notice.getType() << "." << std::endl;
             break;
     }
 }
