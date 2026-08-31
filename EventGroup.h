@@ -20,32 +20,25 @@ class EventGroup : public EventComponent, public Observer, public Subject {
     public:
         /** @param name Name of the area represented by this group. */
         EventGroup(const std::string& name);
+
+
         virtual ~EventGroup();
 
         /**
          * @brief Adds and owns a component.
          * @param component Non-null component whose ownership transfers here.
          */
-        void add(EventComponent* component) override;
+        void add(EventComponent* component) ;
 
         /**
          * @brief Removes a direct child without deleting it.
          * @param component Child to remove; ownership transfers to the caller.
          */
-        void remove(EventComponent* component) override;
+        void remove(EventComponent* component);
 
-        /**
-         * @brief Removes and returns a direct child by name without deleting it.
-         * @param childName Name of the direct child.
-         * @return Removed child, or 0 when no direct child matches.
-         */
-        EventComponent* takeChild(const std::string& childName);
-
-        /** @brief Finds a nested EventGroup by name. @return Matching group or 0. */
-        EventGroup* findGroup(const std::string& groupName);
-
+    
         /** @brief Displays this group and its complete subtree. */
-        void display(int depth = 0) const override;
+        void display(int depth = 0)const override;
         /** @brief Opens this group and all owned descendants. */
         void open() override;
         /** @brief Closes this group and all owned descendants. */

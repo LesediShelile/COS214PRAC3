@@ -22,7 +22,7 @@ int EventComponent::getCapacity() const {
 }
 
 
-void EventComponent::display(int depth) const {
+void EventComponent::display(int depth) const{
     std::cout << std::string(depth * 2, ' ') << "- " << name << std::endl;
 }
 
