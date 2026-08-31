@@ -5,9 +5,10 @@
  * @brief Constructs an event notice.
  *
  * @param message Message describing the notice.
+ * @param severity Severity level assigned to the notice.
  */
-EventNotice::EventNotice(const std::string& message)
-    : message(message) {
+EventNotice::EventNotice(const std::string& message, Severity severity)
+    : message(message), severity(severity) {
 }
 
 /**
@@ -19,10 +20,34 @@ std::string EventNotice::getMessage() const {
     return message;
 }
 
+/**
+ * @brief Returns the severity level assigned to this notice.
+ *
+ * @return LOW, MEDIUM, or HIGH.
+ */
+EventNotice::Severity EventNotice::getSeverity() const {
+    return severity;
+}
+
+/**
+ * @brief Returns a human-readable name for a severity level.
+ *
+ * @param severity Severity level to render.
+ * @return "LOW", "MEDIUM", or "HIGH".
+ */
+std::string severityToString(EventNotice::Severity severity) {
+    switch (severity) {
+        case EventNotice::Severity::LOW:    return "LOW";
+        case EventNotice::Severity::MEDIUM: return "MEDIUM";
+        case EventNotice::Severity::HIGH:   return "HIGH";
+    }
+    return "UNKNOWN";
+}
+
 /* ==================== SafetyAlertNotice ==================== */
 
-SafetyAlertNotice::SafetyAlertNotice(const std::string& message)
-    : EventNotice(message) {
+SafetyAlertNotice::SafetyAlertNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string SafetyAlertNotice::getType() const {
@@ -35,8 +60,8 @@ void SafetyAlertNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== CapacityAlertNotice ==================== */
 
-CapacityAlertNotice::CapacityAlertNotice(const std::string& message)
-    : EventNotice(message) {
+CapacityAlertNotice::CapacityAlertNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string CapacityAlertNotice::getType() const {
@@ -49,8 +74,8 @@ void CapacityAlertNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== ServerOutageNotice ==================== */
 
-ServerOutageNotice::ServerOutageNotice(const std::string& message)
-    : EventNotice(message) {
+ServerOutageNotice::ServerOutageNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string ServerOutageNotice::getType() const {
@@ -63,8 +88,8 @@ void ServerOutageNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== EvacuateNotice ==================== */
 
-EvacuateNotice::EvacuateNotice(const std::string& message)
-    : EventNotice(message) {
+EvacuateNotice::EvacuateNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string EvacuateNotice::getType() const {
@@ -77,8 +102,8 @@ void EvacuateNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== ScheduleChangeNotice ==================== */
 
-ScheduleChangeNotice::ScheduleChangeNotice(const std::string& message)
-    : EventNotice(message) {
+ScheduleChangeNotice::ScheduleChangeNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string ScheduleChangeNotice::getType() const {
@@ -91,8 +116,8 @@ void ScheduleChangeNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== OpenAreaNotice ==================== */
 
-OpenAreaNotice::OpenAreaNotice(const std::string& message)
-    : EventNotice(message) {
+OpenAreaNotice::OpenAreaNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string OpenAreaNotice::getType() const {
@@ -105,8 +130,8 @@ void OpenAreaNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== CloseAreaNotice ==================== */
 
-CloseAreaNotice::CloseAreaNotice(const std::string& message)
-    : EventNotice(message) {
+CloseAreaNotice::CloseAreaNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string CloseAreaNotice::getType() const {
@@ -119,8 +144,8 @@ void CloseAreaNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== WeatherAlertNotice ==================== */
 
-WeatherAlertNotice::WeatherAlertNotice(const std::string& message)
-    : EventNotice(message) {
+WeatherAlertNotice::WeatherAlertNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string WeatherAlertNotice::getType() const {
@@ -133,8 +158,8 @@ void WeatherAlertNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== TemporaryPauseNotice ==================== */
 
-TemporaryPauseNotice::TemporaryPauseNotice(const std::string& message)
-    : EventNotice(message) {
+TemporaryPauseNotice::TemporaryPauseNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string TemporaryPauseNotice::getType() const {
@@ -147,8 +172,8 @@ void TemporaryPauseNotice::dispatch(EventUnit& unit) const {
 
 /* ==================== ResumeNotice ==================== */
 
-ResumeNotice::ResumeNotice(const std::string& message)
-    : EventNotice(message) {
+ResumeNotice::ResumeNotice(const std::string& message, Severity severity)
+    : EventNotice(message, severity) {
 }
 
 std::string ResumeNotice::getType() const {

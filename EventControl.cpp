@@ -7,7 +7,8 @@ EventControl::EventControl() : currentNotice() {}
 void EventControl::issueNotice(EventNotice* notice) {
     if (notice == 0) return;
     currentNotice.reset(notice);
-    std::cout << "\n=== EventControl issues " << currentNotice->getType() << " ===" << std::endl;
+    std::cout << "\n=== EventControl issues " << currentNotice->getType()
+               << " [" << severityToString(currentNotice->getSeverity()) << "] ===" << std::endl;
     if (!currentNotice->getMessage().empty()) {
         std::cout << currentNotice->getMessage() << std::endl;
     }

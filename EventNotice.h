@@ -13,6 +13,20 @@ class EventUnit;
 * without requiring controllers or observers to inspect a notice type.
   */
   class EventNotice {
+  public:
+  /**
+   * @brief Severity level assigned to an event notice.
+   *
+   * Severity lets different observers scale their reaction to how serious
+   * a situation is, instead of responding identically to every notice of
+   * the same type.
+   */
+  enum class Severity {
+      LOW,
+      MEDIUM,
+      HIGH
+  };
+
   protected:
   /**
 
@@ -20,13 +34,19 @@ class EventUnit;
     */
     std::string message;
 
+  /**
+   * @brief Severity level assigned to this notice.
+   */
+    Severity severity;
+
 public:
 /**
 * @brief Constructs an event notice.
 *
 * @param message Message describing the notice.
+* @param severity Severity level assigned to the notice.
 */
-explicit EventNotice(const std::string& message = "");
+explicit EventNotice(const std::string& message = "", Severity severity = Severity::MEDIUM);
 
 
 /**
@@ -49,6 +69,13 @@ virtual std::string getType() const = 0;
 std::string getMessage() const;
 
 /**
+ * @brief Returns the severity level assigned to this notice.
+ *
+ * @return LOW, MEDIUM, or HIGH.
+ */
+Severity getSeverity() const;
+
+/**
  * @brief Dispatches this notice to the appropriate EventUnit behaviour.
  *
  * @param unit Event unit receiving the notice.
@@ -59,8 +86,19 @@ virtual void dispatch(EventUnit& unit) const = 0;
 };
 
 /**
+ * @brief Returns a human-readable name for a severity level.
+ *
+ * @param severity Severity level to render.
+ * @return "LOW", "MEDIUM", or "HIGH".
+ */
+std::string severityToString(EventNotice::Severity severity);
+
+/**
 
 * @brief Concrete event notice representing a safety alert.
+*
+* Defaults to HIGH severity, since an unspecified safety alert is treated
+* as serious until stated otherwise.
   */
   class SafetyAlertNotice : public EventNotice {
   public:
@@ -69,8 +107,9 @@ virtual void dispatch(EventUnit& unit) const = 0;
   * @brief Constructs a safety alert notice.
   *
   * @param message Message describing the safety alert.
+  * @param severity Severity level; defaults to HIGH.
     */
-    explicit SafetyAlertNotice(const std::string& message = "");
+    explicit SafetyAlertNotice(const std::string& message = "", Severity severity = Severity::HIGH);
 
   /**
 
@@ -101,7 +140,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the capacity alert.
     */
-    explicit CapacityAlertNotice(const std::string& message = "");
+    explicit CapacityAlertNotice(const std::string& message = "", Severity severity = Severity::MEDIUM);
 
   /**
 
@@ -132,7 +171,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the server outage.
     */
-    explicit ServerOutageNotice(const std::string& message = "");
+    explicit ServerOutageNotice(const std::string& message = "", Severity severity = Severity::HIGH);
 
   /**
 
@@ -163,7 +202,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the evacuation instruction.
     */
-    explicit EvacuateNotice(const std::string& message = "");
+    explicit EvacuateNotice(const std::string& message = "", Severity severity = Severity::HIGH);
 
   /**
 
@@ -194,7 +233,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the schedule change.
     */
-    explicit ScheduleChangeNotice(const std::string& message = "");
+    explicit ScheduleChangeNotice(const std::string& message = "", Severity severity = Severity::LOW);
 
   /**
 
@@ -225,7 +264,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the area opening.
     */
-    explicit OpenAreaNotice(const std::string& message = "");
+    explicit OpenAreaNotice(const std::string& message = "", Severity severity = Severity::LOW);
 
   /**
 
@@ -256,7 +295,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the area closing.
     */
-    explicit CloseAreaNotice(const std::string& message = "");
+    explicit CloseAreaNotice(const std::string& message = "", Severity severity = Severity::LOW);
 
   /**
 
@@ -287,7 +326,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the weather alert.
     */
-    explicit WeatherAlertNotice(const std::string& message = "");
+    explicit WeatherAlertNotice(const std::string& message = "", Severity severity = Severity::MEDIUM);
 
   /**
 
@@ -318,7 +357,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the temporary pause.
     */
-    explicit TemporaryPauseNotice(const std::string& message = "");
+    explicit TemporaryPauseNotice(const std::string& message = "", Severity severity = Severity::MEDIUM);
 
   /**
 
@@ -349,7 +388,7 @@ virtual void dispatch(EventUnit& unit) const = 0;
   *
   * @param message Message describing the resumption of operations.
     */
-    explicit ResumeNotice(const std::string& message = "");
+    explicit ResumeNotice(const std::string& message = "", Severity severity = Severity::LOW);
 
   /**
 
