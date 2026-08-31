@@ -1,60 +1,31 @@
-#ifndef EVENTCOMPONENT_H
-#define EVENTCOMPONENT_H
+#include "EventComponent.h"
+#include <iostream>
 
-#include <string>
-#include "Observer.h"
+EventComponent::EventComponent(const std::string& name) : name(name), openState(false) {}
 
-/**
- * @brief Common Component interface for the GameVerse Composite tree.
- *
- * Event components are also observers so an EventGroup can receive a pushed
- * notice from its parent and pass that notice down its own Subject links.
- */
-class EventComponent : public Observer {
-protected:
-    std::string name;
-    bool openState;
+void EventComponent::open() {
+    openState = true;
+}
 
-public:
-    explicit EventComponent(const std::string& name);
-    virtual ~EventComponent() {}
+void EventComponent::close() {
+    openState = false;
+}
 
-    virtual void open();
-    virtual void close();
-    virtual void reportStatus() const;
-    virtual int getCapacity() const;
-    virtual void display(int depth = 0) const;
-    std::string getName() const;
-};
+void EventComponent::reportStatus() const {
+    std::cout << name << ": " << (openState ? "Open" : "Closed") << std::endl;
+}
 
-#endif
-#ifndef EVENTCOMPONENT_H
-#define EVENTCOMPONENT_H
+int EventComponent::getCapacity() const {
+    return 0;
+}
 
-#include <string>
-#include "Observer.h"
+void EventComponent::display(int depth) const {
+    for (int i = 0; i < depth; ++i) {
+        std::cout << "  ";
+    }
+    std::cout << name << std::endl;
+}
 
-/**
- * @brief Common Component interface for the GameVerse Composite tree.
- *
- * Event components are also observers so an EventGroup can receive a pushed
- * notice from its parent and pass that notice down its own Subject links.
- */
-class EventComponent : public Observer {
-protected:
-    std::string name;
-    bool openState;
-
-public:
-    explicit EventComponent(const std::string& name);
-    virtual ~EventComponent() {}
-
-    virtual void open();
-    virtual void close();
-    virtual void reportStatus() const;
-    virtual int getCapacity() const;
-    virtual void display(int depth = 0) const;
-    std::string getName() const;
-};
-
-#endif
+std::string EventComponent::getName() const {
+    return name;
+}

@@ -4,12 +4,6 @@
 #include <string>
 #include "Observer.h"
 
-/**
- * @brief Common Component interface for the GameVerse Composite tree.
- *
- * Event components are also observers so an EventGroup can receive a pushed
- * notice from its parent and pass that notice down its own Subject links.
- */
 class EventComponent : public Observer {
 protected:
     std::string name;
