@@ -1,53 +1,72 @@
-# GameVerse EventFlow - COS 214 Practical 3
+# GameVerse EventFlow
 
-GameVerse is a gaming convention coordinated using the Gang of Four Composite and Observer patterns.
+## COS 214 Practical 3
 
-## Build
+GameVerse EventFlow is a C++11 live gaming convention coordination system that uses the Gang of Four **Composite** and **Observer** design patterns.
 
-The project is required to compile with C++11:
+## Event Concept
+
+GameVerse is a gaming and esports convention containing nested operational areas such as esports halls, championship arenas, VR zones, registration areas, VIP spaces and support services. Individual units react differently to operational, capacity and safety notices through polymorphism.
+
+## Team Members
+
+- Member 1: [Name and Student Number]
+- Member 2: [Name and Student Number]
+- Member 3: [Name and Student Number]
+
+## Build and Run
 
 ```bash
 make
-```
-
-This produces the executable:
-
-```bash
 ./eventflow
 ```
 
-To clean build files:
+Or:
+
+```bash
+make run
+```
+
+Clean build files with:
 
 ```bash
 make clean
 ```
 
+## Architecture Overview
+
+### Composite
+
+`EventComponent` is the common Component interface. `EventUnit` represents a Leaf and `EventGroup` represents a Composite. Groups may contain both leaves and other groups, allowing the event to form a genuine part-whole tree.
+
+`EventGroup` **owns** every pointer in its `children` collection. Adding a component transfers ownership to the group. Deleting the root recursively destroys the complete owned subtree exactly once because every group deletes only its direct children.
+
+`takeChild()` removes a child without deleting it and transfers ownership to the caller. The caller must either add the component to another `EventGroup` or delete it. This prevents double deletion during runtime reorganisation.
+
+### Observer
+
+`Subject` stores **non-owning** `Observer*` registrations. A Subject never deletes its observers. Duplicate registrations are ignored and detaching an observer that is not registered has no effect. Notifications use the push approach: `update(const EventNotice&)`.
+
+`EventGroup` participates in both patterns: it is a Composite for ownership and structure, while also acting as an Observer and Subject to support cascading notifications through multiple runtime levels.
+
+## Notices
+
+The system supports operational, capacity and safety-related notices including safety alerts, capacity alerts, server outages, evacuation instructions, schedule changes, area opening and closing, weather alerts, temporary pauses and resume notices.
+
 ## Doxygen
 
-Run:
+Generate documentation with:
 
 ```bash
 doxygen Doxyfile
 ```
 
-The generated HTML documentation is placed in `docs/html/`.
+Generated HTML documentation is written to:
 
-## Architecture
+```text
+docs/doxygen/html/
+```
 
-- `EventComponent` is the common Composite Component abstraction.
-- `EventGroup` is the Composite. It can contain both groups and leaves and owns its children.
-- `EventUnit` is the Leaf abstraction and also an Observer.
-- Concrete event-unit classes provide different polymorphic reactions to notices.
-- `Subject` stores non-owning Observer references.
-- `EventControl` is the concrete Subject that starts event-wide notifications.
-- `EventGroup` is both an Observer and Subject so notices can cascade through nested groups.
-- Observer registration is non-owning. Duplicate registration is ignored and detaching an unregistered observer has no effect.
-- Runtime movement of a unit detaches it from the old group's Subject and attaches it to the new group.
+Open `docs/doxygen/html/index.html` in a browser.
 
-## Event structure
-
-GameVerse contains Main Operations, Esports Hall, VR & Experience Hall, and VIP & Creator Lounge. These groups contain further nested areas and operational units, providing more than three Composite levels below the root.
-
-## Notice types
-
-The simulation includes operational, capacity, safety, scheduling, service and evacuation notices, including `OPEN_AREA`, `CLOSE_AREA`, `SCHEDULE_CHANGE`, `CAPACITY_ALERT`, `SERVER_OUTAGE`, `SAFETY_ALERT`, `TEMPORARY_PAUSE`, and `EVACUATE`.
+The code documents public classes and public operations, including parameters, return values and ownership/lifetime expectations for raw pointers.

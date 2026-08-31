@@ -1,23 +1,160 @@
 #include "EventNotice.h"
 #include "EventUnit.h"
 
-EventNotice::EventNotice(const std::string& message) : message(message) {}
-std::string EventNotice::getMessage() const { return message; }
+/**
+ * @brief Constructs an event notice.
+ *
+ * @param message Message describing the notice.
+ */
+EventNotice::EventNotice(const std::string& message)
+    : message(message) {
+}
 
-#define NOTICE_IMPL(ClassName, DisplayName, Handler) \
-ClassName::ClassName(const std::string& message) : EventNotice(message) {} \
-std::string ClassName::getType() const { return DisplayName; } \
-void ClassName::dispatch(EventUnit& unit) const { unit.Handler(); }
+/**
+ * @brief Returns the notice message.
+ *
+ * @return The human-readable notice message.
+ */
+std::string EventNotice::getMessage() const {
+    return message;
+}
 
-NOTICE_IMPL(SafetyAlertNotice, "SAFETY_ALERT", onSafetyAlert)
-NOTICE_IMPL(CapacityAlertNotice, "CAPACITY_ALERT", onCapacityAlert)
-NOTICE_IMPL(ServerOutageNotice, "SERVER_OUTAGE", onServerOutage)
-NOTICE_IMPL(EvacuateNotice, "EVACUATE", onEvacuate)
-NOTICE_IMPL(ScheduleChangeNotice, "SCHEDULE_CHANGE", onScheduleChange)
-NOTICE_IMPL(OpenAreaNotice, "OPEN_AREA", onOpenArea)
-NOTICE_IMPL(CloseAreaNotice, "CLOSE_AREA", onCloseArea)
-NOTICE_IMPL(WeatherAlertNotice, "WEATHER_ALERT", onWeatherAlert)
-NOTICE_IMPL(TemporaryPauseNotice, "TEMPORARY_PAUSE", onTemporaryPause)
-NOTICE_IMPL(ResumeNotice, "RESUME", onResume)
+/* ==================== SafetyAlertNotice ==================== */
 
-#undef NOTICE_IMPL
+SafetyAlertNotice::SafetyAlertNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string SafetyAlertNotice::getType() const {
+    return "SAFETY_ALERT";
+}
+
+void SafetyAlertNotice::dispatch(EventUnit& unit) const {
+    unit.onSafetyAlert();
+}
+
+/* ==================== CapacityAlertNotice ==================== */
+
+CapacityAlertNotice::CapacityAlertNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string CapacityAlertNotice::getType() const {
+    return "CAPACITY_ALERT";
+}
+
+void CapacityAlertNotice::dispatch(EventUnit& unit) const {
+    unit.onCapacityAlert();
+}
+
+/* ==================== ServerOutageNotice ==================== */
+
+ServerOutageNotice::ServerOutageNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string ServerOutageNotice::getType() const {
+    return "SERVER_OUTAGE";
+}
+
+void ServerOutageNotice::dispatch(EventUnit& unit) const {
+    unit.onServerOutage();
+}
+
+/* ==================== EvacuateNotice ==================== */
+
+EvacuateNotice::EvacuateNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string EvacuateNotice::getType() const {
+    return "EVACUATE";
+}
+
+void EvacuateNotice::dispatch(EventUnit& unit) const {
+    unit.onEvacuate();
+}
+
+/* ==================== ScheduleChangeNotice ==================== */
+
+ScheduleChangeNotice::ScheduleChangeNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string ScheduleChangeNotice::getType() const {
+    return "SCHEDULE_CHANGE";
+}
+
+void ScheduleChangeNotice::dispatch(EventUnit& unit) const {
+    unit.onScheduleChange();
+}
+
+/* ==================== OpenAreaNotice ==================== */
+
+OpenAreaNotice::OpenAreaNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string OpenAreaNotice::getType() const {
+    return "OPEN_AREA";
+}
+
+void OpenAreaNotice::dispatch(EventUnit& unit) const {
+    unit.onOpenArea();
+}
+
+/* ==================== CloseAreaNotice ==================== */
+
+CloseAreaNotice::CloseAreaNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string CloseAreaNotice::getType() const {
+    return "CLOSE_AREA";
+}
+
+void CloseAreaNotice::dispatch(EventUnit& unit) const {
+    unit.onCloseArea();
+}
+
+/* ==================== WeatherAlertNotice ==================== */
+
+WeatherAlertNotice::WeatherAlertNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string WeatherAlertNotice::getType() const {
+    return "WEATHER_ALERT";
+}
+
+void WeatherAlertNotice::dispatch(EventUnit& unit) const {
+    unit.onWeatherAlert();
+}
+
+/* ==================== TemporaryPauseNotice ==================== */
+
+TemporaryPauseNotice::TemporaryPauseNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string TemporaryPauseNotice::getType() const {
+    return "TEMPORARY_PAUSE";
+}
+
+void TemporaryPauseNotice::dispatch(EventUnit& unit) const {
+    unit.onTemporaryPause();
+}
+
+/* ==================== ResumeNotice ==================== */
+
+ResumeNotice::ResumeNotice(const std::string& message)
+    : EventNotice(message) {
+}
+
+std::string ResumeNotice::getType() const {
+    return "RESUME";
+}
+
+void ResumeNotice::dispatch(EventUnit& unit) const {
+    unit.onResume();
+}

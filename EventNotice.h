@@ -6,97 +6,366 @@
 class EventUnit;
 
 /**
- * @brief Abstract push-notification payload used by EventFlow.
- *
- * Concrete notices use polymorphism to deliver the appropriate event action
- * without requiring controllers or observers to inspect a notice type.
- */
-class EventNotice {
-protected:
+
+* @brief Abstract push-notification payload used by EventFlow.
+*
+* Concrete notices use polymorphism to deliver the appropriate event action
+* without requiring controllers or observers to inspect a notice type.
+  */
+  class EventNotice {
+  protected:
+  /**
+
+  * @brief Message describing the event notice.
+    */
     std::string message;
 
 public:
-    explicit EventNotice(const std::string& message = "");
-    virtual ~EventNotice() {}
+/**
+* @brief Constructs an event notice.
+*
+* @param message Message describing the notice.
+*/
+explicit EventNotice(const std::string& message = "");
 
-    /** @return Name of this notice type. */
-    virtual std::string getType() const = 0;
 
-    /** @return Human-readable notice message. */
-    std::string getMessage() const;
+/**
+ * @brief Virtual destructor for safe polymorphic destruction.
+ */
+virtual ~EventNotice() {}
 
-    /** @brief Dispatches this notice to the appropriate EventUnit behaviour. */
-    virtual void dispatch(EventUnit& unit) const = 0;
+/**
+ * @brief Returns the name of this notice type.
+ *
+ * @return Name of the notice type.
+ */
+virtual std::string getType() const = 0;
+
+/**
+ * @brief Returns the human-readable notice message.
+ *
+ * @return The notice message.
+ */
+std::string getMessage() const;
+
+/**
+ * @brief Dispatches this notice to the appropriate EventUnit behaviour.
+ *
+ * @param unit Event unit receiving the notice.
+ */
+virtual void dispatch(EventUnit& unit) const = 0;
+
+
 };
 
-class SafetyAlertNotice : public EventNotice {
-public:
+/**
+
+* @brief Concrete event notice representing a safety alert.
+  */
+  class SafetyAlertNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a safety alert notice.
+  *
+  * @param message Message describing the safety alert.
+    */
     explicit SafetyAlertNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class CapacityAlertNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the safety alert to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing a capacity alert.
+  */
+  class CapacityAlertNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a capacity alert notice.
+  *
+  * @param message Message describing the capacity alert.
+    */
     explicit CapacityAlertNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class ServerOutageNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the capacity alert to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing a server outage.
+  */
+  class ServerOutageNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a server outage notice.
+  *
+  * @param message Message describing the server outage.
+    */
     explicit ServerOutageNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class EvacuateNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the server outage notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing an evacuation.
+  */
+  class EvacuateNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs an evacuation notice.
+  *
+  * @param message Message describing the evacuation instruction.
+    */
     explicit EvacuateNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class ScheduleChangeNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the evacuation notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing a schedule change.
+  */
+  class ScheduleChangeNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a schedule change notice.
+  *
+  * @param message Message describing the schedule change.
+    */
     explicit ScheduleChangeNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class OpenAreaNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the schedule change notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing an area opening.
+  */
+  class OpenAreaNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs an area opening notice.
+  *
+  * @param message Message describing the area opening.
+    */
     explicit OpenAreaNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class CloseAreaNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the area opening notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing an area closing.
+  */
+  class CloseAreaNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs an area closing notice.
+  *
+  * @param message Message describing the area closing.
+    */
     explicit CloseAreaNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class WeatherAlertNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the area closing notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing a weather alert.
+  */
+  class WeatherAlertNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a weather alert notice.
+  *
+  * @param message Message describing the weather alert.
+    */
     explicit WeatherAlertNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class TemporaryPauseNotice : public EventNotice {
-public:
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the weather alert to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
+
+/**
+
+* @brief Concrete event notice representing a temporary pause.
+  */
+  class TemporaryPauseNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a temporary pause notice.
+  *
+  * @param message Message describing the temporary pause.
+    */
     explicit TemporaryPauseNotice(const std::string& message = "");
-    std::string getType() const override;
-    void dispatch(EventUnit& unit) const override;
-};
 
-class ResumeNotice : public EventNotice {
-public:
-    explicit ResumeNotice(const std::string& message = "");
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
     std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the temporary pause notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
     void dispatch(EventUnit& unit) const override;
-};
+    };
+
+/**
+
+* @brief Concrete event notice representing the resumption of operations.
+  */
+  class ResumeNotice : public EventNotice {
+  public:
+  /**
+
+  * @brief Constructs a resume notice.
+  *
+  * @param message Message describing the resumption of operations.
+    */
+    explicit ResumeNotice(const std::string& message = "");
+
+  /**
+
+  * @brief Returns the name of this notice type.
+  *
+  * @return The notice type name.
+    */
+    std::string getType() const override;
+
+  /**
+
+  * @brief Dispatches the resume notice to an event unit.
+  *
+  * @param unit Event unit receiving the notice.
+    */
+    void dispatch(EventUnit& unit) const override;
+    };
 
 #endif

@@ -15,13 +15,28 @@
  */
 class EventGroup : public EventComponent, public Subject {
     protected:
-        std::vector<EventComponent*> children;
+    /**
+     * @brief Child components owned by this composite group.
+     *
+     * EventGroup owns the pointers stored in this collection and is
+     * responsible for deleting them when the group is destroyed, unless
+     * ownership has been transferred using takeChild().
+     */
+    std::vector<EventComponent*> children;
 
     public:
         /** @param name Name of the area represented by this group. */
         EventGroup(const std::string& name);
 
 
+        /**
+         * @brief Destroys this group and all components it currently owns.
+         *
+         * Each group deletes only its direct children. Nested EventGroup
+         * children recursively delete their own subtrees, so deleting the root
+         * releases the complete owned Composite tree exactly once. Components
+         * previously removed with takeChild() are no longer owned here.
+         */
         virtual ~EventGroup();
 
         /**
@@ -36,7 +51,11 @@ class EventGroup : public EventComponent, public Subject {
          */
         void remove(EventComponent* component);
 
-        /** @brief Removes and returns a child without deleting it. @param childName Name of the child. @return Detached child, or null if not found. */
+        /**
+         * @brief Removes and returns a child without deleting it.
+         * @param childName Name of the child.
+         * @return Detached child, or nullptr if not found. Ownership transfers to the caller.
+         */
         EventComponent* takeChild(const std::string& childName);
 
         /** @brief Finds a nested group by name. @param groupName Group name. @return Matching group, or null. */
