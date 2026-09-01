@@ -2,24 +2,33 @@
 #include "EventNotice.h"
 #include <iostream>
 
-EsportsStage::EsportsStage() : EventUnit("Esports Stage") {}
+EsportsStage::EsportsStage() : EventUnit("Esports Stage", 800) {}
 
 void EsportsStage::update(const EventNotice& notice) {
-    switch (notice.getType()) {
-        case NoticeType::SAFETY_ALERT:
-            std::cout << "  Esports Stage: pauses the current tournament match." << std::endl;
-            break;
-        case NoticeType::SERVER_OUTAGE:
-            std::cout << "  Esports Stage: pauses the tournament." << std::endl;
-            break;
-        case NoticeType::EVACUATE:
-            std::cout << "  Esports Stage: immediately pauses the tournament." << std::endl;
-            break;
-        case NoticeType::SCHEDULE_CHANGE:
-            std::cout << "  Esports Stage: updates the tournament start time." << std::endl;
-            break;
-        default:
-            std::cout << "  Esports Stage: acknowledges " << notice.getTypeName() << "." << std::endl;
-            break;
+    // Safety alerts are scaled by severity: only a HIGH severity alert is
+    // serious enough to pause a live match immediately. Lower severities
+    // fall through to the default (lighter) onSafetyAlert() response.
+    if (notice.getType() == "SAFETY_ALERT" &&
+        notice.getSeverity() == EventNotice::Severity::HIGH) {
+        std::cout << "  Esports Stage: HIGH severity safety alert - match paused immediately."
+                   << std::endl;
+        return;
     }
+    notice.dispatch(*this);
+}
+
+void EsportsStage::onSafetyAlert() {
+    std::cout << "  Esports Stage: safety alert noted, match continues under caution." << std::endl;
+}
+
+void EsportsStage::onServerOutage() {
+    std::cout << "  Esports Stage: pauses the tournament." << std::endl;
+}
+
+void EsportsStage::onEvacuate() {
+    std::cout << "  Esports Stage: immediately pauses the tournament." << std::endl;
+}
+
+void EsportsStage::onScheduleChange() {
+    std::cout << "  Esports Stage: updates the tournament start time." << std::endl;
 }

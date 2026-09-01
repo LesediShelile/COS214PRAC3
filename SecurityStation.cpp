@@ -2,15 +2,12 @@
 #include "EventNotice.h"
 #include <iostream>
 
-SecurityStation::SecurityStation() : EventUnit("Security Station") {}
+SecurityStation::SecurityStation() : EventUnit("Security Station", 20) {}
 
 void SecurityStation::update(const EventNotice& notice) {
-    switch (notice.getType()) {
-        case NoticeType::CAPACITY_ALERT:
-            std::cout << "  Security Station: sends security personnel to manage the queue." << std::endl;
-            break;
-        default:
-            std::cout << "  Security Station: acknowledges " << notice.getTypeName() << "." << std::endl;
-            break;
-    }
+    notice.dispatch(*this);
+}
+
+void SecurityStation::onCapacityAlert() {
+    std::cout << "  Security Station: sends security personnel to manage the queue." << std::endl;
 }

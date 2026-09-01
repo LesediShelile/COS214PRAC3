@@ -1,18 +1,29 @@
 #include "EventComponent.h"
 #include <iostream>
 
-EventComponent::EventComponent(const std::string& name) : name(name) {}
+EventComponent::EventComponent(const std::string& name) : name(name), openState(false) {}
 
-void EventComponent::add(EventComponent* /*component*/) {
-    // Leaves have no children; default implementation intentionally does nothing.
+void EventComponent::open() {
+    openState = true;
 }
 
-void EventComponent::remove(EventComponent* /*component*/) {
-    // Leaves have no children; default implementation intentionally does nothing.
+void EventComponent::close() {
+    openState = false;
+}
+
+void EventComponent::reportStatus() const {
+    std::cout << name << ": " << (openState ? "Open" : "Closed") << std::endl;
+}
+
+int EventComponent::getCapacity() const {
+    return 0;
 }
 
 void EventComponent::display(int depth) const {
-    std::cout << std::string(depth * 2, ' ') << "- " << name << std::endl;
+    for (int i = 0; i < depth; ++i) {
+        std::cout << "  ";
+    }
+    std::cout << name << std::endl;
 }
 
 std::string EventComponent::getName() const {

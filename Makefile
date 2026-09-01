@@ -1,19 +1,16 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -g
+CXXFLAGS = -std=c++11 -Wall -Wextra -pedantic -g
 
 SRCS = $(wildcard *.cpp)
-SRCS := $(filter-out main.cpp, $(SRCS))
 OBJS = $(SRCS:.cpp=.o)
-
-TARGET = gameverse
-TEST_TARGET = gameverse_test
+TARGET = eventflow
 
 .PHONY: all clean run
 
 all: $(TARGET)
 
-$(TARGET): main.o $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) main.o $(OBJS)
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -22,4 +19,4 @@ run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -f *.o $(TARGET) $(TEST_TARGET)
+	rm -f *.o $(TARGET)
