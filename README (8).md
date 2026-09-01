@@ -26,9 +26,9 @@ polymorphically to the same notice.
 ## Team
 
 | Name | Student Number | Role |
-|---|---|---|
-| Lesedi Shelile || Composite structure — Tasks 1.1, 1.2, 2, 4.1, 4.2 |
-| Kiara Jodhaparsadh |  | Observer system — Tasks 1.3, 1.4, 3, 4.3, 4.4 |
+
+| Lesedi Shelile |u25110455 | Composite structure — Tasks 1.1, 1.2, 2, 4.1, 4.2 |
+| Kiara Jodhaparsadh |u25395344 | Observer system — Tasks 1.3, 1.4, 3, 4.3, 4.4 |
 | Ajba | u25316584 | Sequence diagrams, integration — Tasks 5, 7, 8 |
 
 ## Building and Running
